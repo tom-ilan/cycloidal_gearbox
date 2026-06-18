@@ -1,0 +1,55 @@
+# --- macOS ---
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.cache
+.pytest_cache/
+
+# --- C++ & Arduino ---
+# Compiled Object files
+*.o
+*.obj
+*.app
+*.exe
+*.dSYM/
+
+# IDE Settings (VS Code, Arduino IDE, QtCreator)
+.vscode/
+.vs/
+*.sln
+*.vcxproj
+*.filters
+*.user
+build/
+bin/
+
+# Arduino Specific
+*.hex
+*.elf
+*.bin
+
+# Temp/Autosave
+*~
+.~*
+
+# Ignore any test or temporary files starting with double underscores in any directory
+**/__*
+
+# Ignore the antigravity CLI tool configuration file
+.antigravitycli
