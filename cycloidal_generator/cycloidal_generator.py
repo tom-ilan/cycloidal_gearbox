@@ -98,7 +98,7 @@ def run(context):
             pin_center = adsk.core.Point3D.create(x_outer_pin, y_outer_pin, 0)
 
             # Draw the housing pin using the correct pin radius variable 2 * r to ensure proper spacing and fit
-            radius_for_pin = 2 * 
+            radius_for_pin = 2 * r  # Use the user-defined pin radius for the outer pins
             sketch_outer_pin_circles.addByCenterRadius(pin_center, radius_for_pin)
 
         sketch_outer_pin_circles.addByCenterRadius(adsk.core.Point3D.create(0, 0, 0), radius_for_pin)
