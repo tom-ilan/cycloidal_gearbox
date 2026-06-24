@@ -102,7 +102,7 @@ def run(context):
             sketch_outer_pin_circles.addByCenterRadius(pin_center, radius_for_pin)
 
         sketch_outer_pin_circles.addByCenterRadius(adsk.core.Point3D.create(0, 0, 0), radius_for_pin)
-        sketch_outer_pin_circles.addByCenterRadius(adsk.core.Point3D.create(E, 0, 0), r)
+        sketch_outer_pin_circles.addByCenterRadius(adsk.core.Point3D.create(-E, 0, 0), r)
 
     except ValueError:
         if ui:
