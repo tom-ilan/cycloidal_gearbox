@@ -52,6 +52,11 @@ def run(context):
         if cancelled or not input_step: return
         step_angle = float(input_step)
 
+        # 6. Ask the user for the input shaft/bearing radius at the top of your script
+        input_shaft_r, cancelled = ui.inputBox('Enter input shaft/bearing radius in cm:', 'Gear Parameters', '1.0')
+        if cancelled or not input_shaft_r: return
+        shaft_radius = float(input_shaft_r)
+
         # Guard rail to prevent infinite loops or crashes
         if step_angle <= 0:
             ui.messageBox('Precision step angle must be greater than 0.')
@@ -98,11 +103,13 @@ def run(context):
             pin_center = adsk.core.Point3D.create(x_outer_pin, y_outer_pin, 0)
 
             # Draw the housing pin using the correct pin radius variable 2 * r to ensure proper spacing and fit
-            radius_for_pin = 2 * r  # Use the user-defined pin radius for the outer pins
+            radius_for_pin = r  # Use the user-defined pin radius for the outer pins
             sketch_outer_pin_circles.addByCenterRadius(pin_center, radius_for_pin)
 
-        sketch_outer_pin_circles.addByCenterRadius(adsk.core.Point3D.create(0, 0, 0), radius_for_pin)
-        sketch_outer_pin_circles.addByCenterRadius(adsk.core.Point3D.create(-E, 0, 0), r)
+        # 2. Add the center bore hole directly to the disk sketch so it moves/extrudes with the disk
+        sketch_disk_circles = sketch_disk.sketchCurves.sketchCircles
+        sketch_disk_circles.addByCenterRadius(adsk.core.Point3D.create(E, 0, 0), shaft_radius)
+        sketch_disk_circles.addByCenterRadius(adsk.core.Point3D.create(E, 0, 0), shaft_radius + E)
 
     except ValueError:
         if ui:
