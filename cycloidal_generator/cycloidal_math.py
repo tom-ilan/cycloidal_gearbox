@@ -5,10 +5,10 @@ def disk(t: float, N: int, R: float, E: float, r: float) -> tuple:
     """Calculate a point on the cycloidal disk profile.
 
     Uses the parametric equations:
-        x = R·cos(t) - r·cos(t + psi) - E·cos(N·t)
-        y = -R·sin(t) + r·sin(t + psi) + E·sin(N·t)
+        x = R·cos(t) - r·cos(t + ψ) - E·cos(N·t)
+        y = -R·sin(t) + r·sin(t + ψ) + E·sin(N·t)
 
-    where psi = atan2(sin((1-N)·t), R/(E·N) - cos((1-N)·t))
+    where ψ = atan2(sin((1-N)·t), R/(E·N) - cos((1-N)·t))
 
     Args:
         t: Angle parameter in radians.
@@ -47,4 +47,33 @@ def outer_pin(index: int, N: int, R: float, E: float, r: float) -> tuple:
     theta = 2 * math.pi * index / N
     x = R * math.cos(theta)
     y = R * math.sin(theta)
+    return (x, y)
+
+
+def output_pin_position(index: int, num_pins: int, bolt_radius: float) -> tuple:
+    """Calculate a position on the output bolt circle.
+
+    Returns the (x, y) position equally spaced with num_pins total positions
+    on a circle of the given radius. Coordinates are relative to the center
+    of the bolt circle.
+
+    Used for both:
+      - Output pins on the output disk (bolt circle centered at origin).
+      - Output holes in the rotor (bolt circle centered at rotor center).
+
+    The output disk rotates opposite to the input at a reduction ratio of
+    1:(N-1), where N is the number of outer housing pins:
+        θ_out = -t / (N - 1)
+
+    Args:
+        index: Pin/hole index (0 to num_pins-1).
+        num_pins: Total number of pins/holes (typically N-1 lobes).
+        bolt_radius: Radius of the bolt circle in centimeters.
+
+    Returns:
+        (x, y) coordinates relative to the bolt circle center.
+    """
+    theta = 2 * math.pi * index / num_pins
+    x = bolt_radius * math.cos(theta)
+    y = bolt_radius * math.sin(theta)
     return (x, y)
