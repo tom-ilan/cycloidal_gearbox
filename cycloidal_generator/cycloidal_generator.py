@@ -30,10 +30,11 @@ def _get_int_input(ui, prompt: str, title: str, default: str):
         return None
     return int(value)
 
-
+# Main entry point for the Fusion 360 script.
 def run(context):
     ui = None
     try:
+        # Get the Fusion 360 application and user interface
         app = adsk.core.Application.get()
         ui = app.userInterface
         design = adsk.fusion.Design.cast(app.activeProduct)
@@ -155,6 +156,7 @@ def run(context):
             pin_center = adsk.core.Point3D.create(px, py, 0)
             output_circles.addByCenterRadius(pin_center, output_pin_radius)
 
+    # Error handling for user input and unexpected exceptions
     except ValueError:
         if ui:
             ui.messageBox('Error: Please enter valid numerical values.')
