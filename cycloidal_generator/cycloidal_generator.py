@@ -42,7 +42,7 @@ def run(context):
             ui.messageBox('Please open a design before running the script.')
             return
 
-        # --- Gather user inputs ---
+        # Gather user inputs
         title = 'Gear Parameters'
 
         N = _get_int_input(ui, 'Enter number of pins (N):', title, '6')
@@ -92,7 +92,7 @@ def run(context):
             ui.messageBox('Number of output holes must be at least 2.')
             return
 
-        # --- Create sketches ---
+        # Creates sketches
         rootComp = design.rootComponent
         xyPlane = rootComp.xYConstructionPlane
 
@@ -105,7 +105,7 @@ def run(context):
         sketch_output = rootComp.sketches.add(xyPlane)
         sketch_output.name = "Output Disk"
 
-        # --- Generate cycloidal disk profile ---
+        # Generate cycloidal disk profile 
         points = adsk.core.ObjectCollection.create()
         angle = 0.0
 
@@ -121,21 +121,21 @@ def run(context):
 
         sketch_disk.sketchCurves.sketchFittedSplines.add(points)
 
-        # --- Generate outer housing pins ---
+        # Generate outer housing pins
         pin_circles = sketch_pins.sketchCurves.sketchCircles
         for i in range(N):
             cx, cy = cycloidal_math.outer_pin(i, N, R, E, r)
             center = adsk.core.Point3D.create(cx, cy, 0)
             pin_circles.addByCenterRadius(center, r)
 
-        # --- Add input shaft ---
+        # Add input shaft
         disk_circles = sketch_disk.sketchCurves.sketchCircles
         offset_shaft_radius_center = adsk.core.Point3D.create(E, 0, 0)
         shaft_radius_center = adsk.core.Point3D.create(0, 0, 0)
         disk_circles.addByCenterRadius(offset_shaft_radius_center, shaft_radius)
         disk_circles.addByCenterRadius(shaft_radius_center, shaft_radius + E)
 
-        # --- Add output holes to the cycloidal disk (rotor) ---
+        # Add output holes to the cycloidal disk (rotor)
         # Hole radius = output_pin_radius + E to accommodate the eccentric wobble.
         # Holes are on a bolt circle centered at the rotor center (E, 0).
         output_hole_radius = output_pin_radius + E
@@ -145,7 +145,7 @@ def run(context):
             hole_center = adsk.core.Point3D.create(E + hx, hy, 0)
             disk_circles.addByCenterRadius(hole_center, output_hole_radius)
 
-        # --- Generate output disk pins ---
+        # Generate output disk pins
         # The output disk is concentric with the housing (centered at origin).
         # It rotates opposite to the input shaft at a 1:(N-1) reduction ratio:
         #   θ_out = -t / (N - 1)
