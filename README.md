@@ -1,16 +1,10 @@
-# Cycloidal Gearbox Generator for Autodesk Fusion 360
+# Cycloidal Gearbox ⚙️
 
-This project is a Python-based script for **Autodesk Fusion 360** that automatically generates the sketch profiles required to model a complete cycloidal gearbox. It calculates and draws the cycloidal disk (rotor), the outer housing pins, and the concentric output disk pins and oversized rotor clearance holes.
+This project currently has two parts completed parts:
 
----
+1) A Python-based script for **Autodesk Fusion 360** that automatically generates the sketch profiles required to model a complete cycloidal gearbox. It calculates and draws the cycloidal disk, the outer housing pins, and the concentric output disk pins, and the input pins.
 
-## Features
-
-- **Cycloidal Disk Profile:** Parametrically draws the epitrochoidal rotor shape using precise geometry.
-- **Housing Pin Layout:** Automatically spaces and draws the outer housing pins around the pitch circle.
-- **Output Holes (Rotor):** Generates output holes in the rotor with custom spacing. The hole radius is automatically oversized by the eccentricity (`r_pin + E`) to allow the rotor to wobble freely while remaining in contact with the output pins.
-- **Output Disk & Pins:** Generates a concentric output disk sketch containing the pins.
-- **Auto-Reloading:** Uses python module reloading to ensure that any edits to the underlying math module are picked up immediately by Fusion 360 during script execution.
+2) An example of what a 3d printed cycloidal gearbox that was designed using the python script and 3d printed
 
 ---
 
@@ -72,3 +66,9 @@ $$\psi = \text{atan2}\left(\sin((1 - N) \cdot t), \frac{R}{E \cdot N} - \cos((1 
 - **Speed Reduction:** For an $N$-pin stationary ring housing, the output disk rotates in the opposite direction of the input shaft with a speed reduction of:
 
 $$\theta_{\text{out}} = -\frac{t}{N - 1}$$
+
+--- 
+## In Development
+
+- Version 2 of the drive using bearings, and screws for tighter tollerances, and higher efficencies
+- Use of a Nema 17 stepper motor, a4988 driver to drive the gearbox 
