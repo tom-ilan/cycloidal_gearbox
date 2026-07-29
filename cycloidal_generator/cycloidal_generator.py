@@ -18,10 +18,19 @@ importlib.reload(cycloidal_math)
 _handlers = []
 
 
-def create_geometry(N: int, R: float, E: float, r: float, step_angle: float, 
-                    shaft_radius: float, output_pin_radius: float, 
-                    num_output_holes: int, output_bolt_radius: float):
-    """Generates the sketches in Autodesk Fusion 360 with the specified parameters."""
+def create_geometry(N: int, R: float, E: float, r: float, step_angle: float,
+                    shaft_radius: float, output_pin_radius: float,
+                    num_output_holes: int, output_bolt_radius: float,
+                    profile_offset: float = 0.0):
+    """Generates the sketches in Autodesk Fusion 360 with the specified parameters.
+
+    Args:
+        profile_offset: Signed tolerance offset applied only to the disk spline
+            (cm).  Positive values shrink the disk away from the pins (clearance
+            for 3D-print tolerance); negative values grow it (tighter fit).  The
+            effective pin radius used for the disk profile is r + profile_offset,
+            so the outer-housing pin circles are always drawn at the true r.
+    """
     app = adsk.core.Application.get()
     design = adsk.fusion.Design.cast(app.activeProduct)
     if not design:
@@ -40,19 +49,27 @@ def create_geometry(N: int, R: float, E: float, r: float, step_angle: float,
     sketch_output = rootComp.sketches.add(xyPlane)
     sketch_output.name = "Output Disk"
 
-    # Generate cycloidal disk profile
-    points = adsk.core.ObjectCollection.create()
-    angle = 0.0
+    # Generate cycloidal disk profile.
+    # r_disk incorporates the tolerance offset: positive offset moves the profile
+    # inward (away from the pins), giving clearance for 3D-print tolerances.
+    r_disk = r + profile_offset
 
+    points = adsk.core.ObjectCollection.create()
+
+    # Compute and store the first point so we can reuse it exactly to close
+    # the spline — avoids a floating-point seam kink from recomputing at 360°.
+    first_x, first_y = cycloidal_math.disk(0.0, N, R, E, r_disk)
+    points.add(adsk.core.Point3D.create(first_x, first_y, 0))
+
+    angle = step_angle
     while angle < 360.0:
         t = math.radians(angle)
-        x, y = cycloidal_math.disk(t, N, R, E, r)
+        x, y = cycloidal_math.disk(t, N, R, E, r_disk)
         points.add(adsk.core.Point3D.create(x, y, 0))
         angle += step_angle
 
-    # Close the spline at exactly 360°
-    x_end, y_end = cycloidal_math.disk(math.radians(360.0), N, R, E, r)
-    points.add(adsk.core.Point3D.create(x_end, y_end, 0))
+    # Close the spline by reusing the exact first point (no recomputation).
+    points.add(adsk.core.Point3D.create(first_x, first_y, 0))
 
     sketch_disk.sketchCurves.sketchFittedSplines.add(points)
 
@@ -65,10 +82,8 @@ def create_geometry(N: int, R: float, E: float, r: float, step_angle: float,
 
     # Add input shaft circles to the cycloidal disk sketch
     disk_circles = sketch_disk.sketchCurves.sketchCircles
-    offset_shaft_radius_center = adsk.core.Point3D.create(E, 0, 0)
-    shaft_radius_center = adsk.core.Point3D.create(0, 0, 0)
+    offset_shaft_radius_center = adsk.core.Point3D.create(0, 0, 0)
     disk_circles.addByCenterRadius(offset_shaft_radius_center, shaft_radius)
-    disk_circles.addByCenterRadius(shaft_radius_center, shaft_radius + E)
 
     # Add output holes to the cycloidal disk (rotor)
     # Hole radius = output_pin_radius + E to accommodate the eccentric wobble.
@@ -111,6 +126,7 @@ class GearboxCommandExecuteHandler(adsk.core.CommandEventHandler):
             output_pin_radius = inputs.itemById('output_pin_radius').value
             num_output_holes = inputs.itemById('num_output_holes').value
             output_bolt_radius = inputs.itemById('output_bolt_radius').value
+            profile_offset = inputs.itemById('profile_offset').value
             
             if step_angle <= 0:
                 adsk.core.Application.get().userInterface.messageBox('Precision step angle must be greater than 0.')
@@ -120,7 +136,35 @@ class GearboxCommandExecuteHandler(adsk.core.CommandEventHandler):
                 adsk.core.Application.get().userInterface.messageBox('Number of output holes must be at least 2.')
                 return
             
-            create_geometry(N, R, E, r, step_angle, shaft_radius, output_pin_radius, num_output_holes, output_bolt_radius)
+            # Validate outer pin radius against the undercutting limit.
+            # The cycloidal disk profile is an inward offset of the base epitrochoid by r.
+            # The minimum radius of curvature of that base curve occurs at the outer lobe
+            # tips and equals (R + E*N)^2 / (R + E*N^2).  When r reaches this value the
+            # lobe tips become cusps; beyond it the profile self-intersects (undercuts).
+            # The prerequisite R > E*N (K > 1) must also hold for the base curve to be
+            # valid at all.
+            if R <= E * N:
+                adsk.core.Application.get().userInterface.messageBox(
+                    'Invalid geometry: Pitch Radius (R) must be greater than E × N '
+                    f'({E * N:.4f} cm). Increase R or reduce E / N.'
+                )
+                return
+            
+            r_max = (R + E * N) ** 2 / (R + E * N ** 2)
+            # The effective disk radius includes the tolerance offset; validate that too.
+            r_disk = r + profile_offset
+            if r_disk >= r_max:
+                adsk.core.Application.get().userInterface.messageBox(
+                    f'Outer lobe is too big: the effective disk profile radius '
+                    f'(r + offset = {r_disk:.4f} cm) must be less than {r_max:.4f} cm '
+                    f'for these parameters. The lobe tips would develop cusps or undercut, '
+                    f'making the profile geometrically impossible. '
+                    f'Reduce r or the profile offset, increase R, or reduce E / N.'
+                )
+                return
+            
+            create_geometry(N, R, E, r, step_angle, shaft_radius, output_pin_radius,
+                            num_output_holes, output_bolt_radius, profile_offset)
             
         except Exception:
             adsk.core.Application.get().userInterface.messageBox('Failed:\n{}'.format(traceback.format_exc()))
@@ -176,13 +220,19 @@ class GearboxCommandCreatedHandler(adsk.core.CommandCreatedEventHandler):
             inputs.addValueInput('pitch_radius', 'Pitch Radius (R)', 'cm', adsk.core.ValueInput.createByReal(5.0))
             inputs.addValueInput('eccentricity', 'Eccentricity (E)', 'cm', adsk.core.ValueInput.createByReal(0.2))
             inputs.addValueInput('pin_radius', 'Outer Pin Radius (r)', 'cm', adsk.core.ValueInput.createByReal(0.4))
-            inputs.addValueInput('step_angle', 'Precision (Step angle)', 'deg', adsk.core.ValueInput.createByReal(2.0))
+            inputs.addValueInput('step_angle', 'Precision (Step angle)', 'deg', adsk.core.ValueInput.createByReal(math.radians(2.0)))
             inputs.addValueInput('shaft_radius', 'Input Shaft/Bearing Radius', 'cm', adsk.core.ValueInput.createByReal(1.0))
             inputs.addValueInput('output_pin_radius', 'Output Pin Radius', 'cm', adsk.core.ValueInput.createByReal(0.5))
             
             inputs.addIntegerSpinnerCommandInput('num_output_holes', 'Number of Output Holes', 2, 100, 1, 5)
             
             inputs.addValueInput('output_bolt_radius', 'Output Bolt Circle Radius', 'cm', adsk.core.ValueInput.createByReal(2.5))
+            
+            # Tolerance offset shifts the disk spline inward (+) or outward (-) along
+            # the profile normal to compensate for 3D-print dimensional inaccuracy.
+            # Typical FDM clearance: +0.01 to +0.02 cm (0.1 – 0.2 mm).
+            inputs.addValueInput('profile_offset', 'Disk Profile Tolerance Offset  (+clearance / −tighter)', 'cm',
+                                 adsk.core.ValueInput.createByReal(0.0))
             
             # Connect command execution event handler
             onExecute = GearboxCommandExecuteHandler()
@@ -205,6 +255,9 @@ class GearboxCommandCreatedHandler(adsk.core.CommandCreatedEventHandler):
 
 def run(context):
     ui = None
+    # Clear stale handlers from any previous run in this Fusion 360 session
+    # to prevent memory leaks and ghost callbacks accumulating over re-runs.
+    _handlers.clear()
     try:
         app = adsk.core.Application.get()
         ui = app.userInterface

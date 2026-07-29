@@ -5,7 +5,7 @@ This project currently has two parts completed parts:
 1) A Python-based script for **Autodesk Fusion 360** that automatically generates the sketch profiles required to model a complete cycloidal gearbox. It calculates and draws the cycloidal disk, the outer housing pins, and the concentric output disk pins, and the input pins.
 
 2) An example of what a 3d printed cycloidal gearbox that was designed using the python script and 3d printed
-
+[insert image from media]
 ---
 
 ## File Structure
@@ -71,4 +71,4 @@ $$\theta_{\text{out}} = -\frac{t}{N - 1}$$
 ## In Development
 
 - Version 2 of the drive using bearings, and screws for tighter tollerances, and higher efficencies
-- Use of a Nema 17 stepper motor, a4988 driver to drive the gearbox 
+- Use of a Nema 17 stepper motor, a4988 driver to drive the gearbox (both version 1 and 2). 

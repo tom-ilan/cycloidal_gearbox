@@ -5,8 +5,8 @@ def disk(t: float, N: int, R: float, E: float, r: float) -> tuple:
     """Calculate a point on the cycloidal disk profile.
 
     Uses the parametric equations:
-        x = R·cos(t) - r·cos(t + ψ) - E·cos(N·t)
-        y = -R·sin(t) + r·sin(t + ψ) + E·sin(N·t)
+        x = R·cos(t) - E·cos(N·t) - r·cos(t + ψ)
+        y = R·sin(t) - E·sin(N·t) - r·sin(t + ψ)
 
     where ψ = atan2(sin((1-N)·t), R/(E·N) - cos((1-N)·t))
 
@@ -24,8 +24,9 @@ def disk(t: float, N: int, R: float, E: float, r: float) -> tuple:
     den = (R / (E * N)) - math.cos((1 - N) * t)
     psi = math.atan2(num, den)
 
-    x = R * math.cos(t) - r * math.cos(t + psi) - E * math.cos(N * t)
-    y = -R * math.sin(t) + r * math.sin(t + psi) + E * math.sin(N * t)
+    # Standard aligned parametric equations
+    x = R * math.cos(t) - E * math.cos(N * t) - r * math.cos(t + psi)
+    y = R * math.sin(t) - E * math.sin(N * t) - r * math.sin(t + psi)
     return (x, y)
 
 
