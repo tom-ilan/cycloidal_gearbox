@@ -70,13 +70,13 @@ $$\theta_{\text{out}} = -\frac{t}{N - 1}$$
 
 ## Cycloidal Gearbox Examples
 
-# Version 1
+### Version 1
 A hand powered simple cycloidal gearbox
 
-# Version 2
+### Version 2
 A non functional attempt at a micro cycloidal gearbox atached to a nema 17 stepper motor
 
-# Version 3
+### Version 3
 A functional cycloidal gearbox that runs on a nema 17, with a 9 cm diameter and a 1:9 gear ratio
 
 ---
