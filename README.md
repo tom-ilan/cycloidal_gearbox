@@ -4,15 +4,13 @@ This project currently has two parts completed parts:
 
 1) A Python-based script for **Autodesk Fusion 360** that automatically generates the sketch profiles required to model a complete cycloidal gearbox. It calculates and draws the cycloidal disk, the outer housing pins, and the concentric output disk pins, and the input pins.
 
-2) An example of what a 3d printed cycloidal gearbox that was designed using the python script and 3d printed
-[insert image from media]
+2) An example of what a 3d printed cycloidal gearbox that was designed using the python script and 3d printed, can be found under version_3.
 ---
 
 ## File Structure
 
-- **[cycloidal_generator.py]** Main entry point for the Fusion 360 script. Handles user interface prompts, input validation, and sketch creation.
-- **[cycloidal_math.py]** Dedicated mathematical helper module containing parametric equations for the cycloidal profile disk, outer pins, and output pins/holes.
-- **[cycloidal_generator.manifest]** Autodesk Fusion 360 script manifest file.
+- **[cycloidal_generator]** The parametric equation generator
+- **[cad_models]** The models used in each version of the cycloidal gearbox examples
 
 ---
 
@@ -31,17 +29,18 @@ This project currently has two parts completed parts:
 
 When running the script, you will be prompted for the following parameters (all dimensions are in **centimeters**):
 
-| Parameter | Default | Description |
-|---|---|---|
-| **Number of pins (N)** | `6` | Total number of outer stationary housing pins. The cycloidal disk will have $N - 1$ lobes. |
-| **Pitch radius (R)** | `5.0` | Radius of the circle on which the outer housing pins are distributed. |
-| **Eccentricity (E)** | `0.2` | The input shaft offset/eccentricity. |
-| **Outer pin radius (r)** | `0.4` | Radius of the stationary outer housing pins/rollers. |
-| **Step size / Precision** | `2.0` | Angular precision in degrees. A smaller step size generates a smoother spline profile. |
-| **Input shaft/bearing radius** | `1.0` | Radius of the central input bearing. |
-| **Output pin radius** | `0.5` | Radius of the pins attached to the output disk/shaft. |
-| **Number of output holes** | `5` *(N-1)* | The quantity of output pin-and-hole arrangements. |
-| **Output bolt circle radius** | `2.5` | The radial distance from the center to the output pins/holes. |
+| Parameter | Description |
+|---|
+| **Number of pins (N)** | Total number of outer stationary housing pins. The cycloidal disk will have $N - 1$ lobes. |
+| **Pitch radius (R)**  | Radius of the circle on which the outer housing pins are distributed. |
+| **Eccentricity (E)** | The input shaft offset/eccentricity. |
+| **Outer pin radius (r)**  | Radius of the stationary outer housing pins/rollers. |
+| **Step size / Precision** | Angular precision in degrees. A smaller step size generates a smoother spline profile. |
+| **Input shaft/bearing radius**  | Radius of the central input bearing. |
+| **Output pin radius** | Radius of the pins attached to the output disk/shaft. |
+| **Number of output holes**  | The quantity of output pin-and-hole arrangements. |
+| **Output bolt circle radius** | The radial distance from the center to the output pins/holes. |
+| **Tollerence** | An offest applied to the disk for manifacturing |
 
 ---
 
@@ -68,7 +67,20 @@ $$\psi = \text{atan2}\left(\sin((1 - N) \cdot t), \frac{R}{E \cdot N} - \cos((1 
 $$\theta_{\text{out}} = -\frac{t}{N - 1}$$
 
 --- 
+
+## Cycloidal Gearbox Examples
+
+# Version 1
+A hand powered simple cycloidal gearbox
+
+# Version 2
+A non functional attempt at a micro cycloidal gearbox atached to a nema 17 stepper motor
+
+# Version 3
+A functional cycloidal gearbox that runs on a nema 17, with a 9 cm diameter and a 1:9 gear ratio
+
+---
+
 ## In Development
 
-- Version 2 of the drive using bearings, and screws for tighter tollerances, and higher efficencies
-- Use of a Nema 17 stepper motor, a4988 driver to drive the gearbox (both version 1 and 2). 
+- version 4 a micro gearbox similar to version 2 but actually working
