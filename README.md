@@ -45,7 +45,7 @@ Reduction ratio: **$1 : (N - 1)$** (rotor rotates opposite to input shaft).
 | **Outer Diameter** | 9.0 cm (90 mm) |
 | **Drive Motor** | NEMA 17 Stepper Motor |
 | **3D Printing Material** | PLA |
-| **Primary Fasteners / Hardware** | 4× **M3 × 8 screws**, 2× **6004 Bearings** |
+| **Primary Fasteners / Hardware** | 4× **M3 × 8 screws**, 2× **6704 Bearings** |
 | **Tolerance Offset Applied** | +0.15 mm (+0.015 cm) profile clearance |
 | **Gearbox Torque** | 0.81 N·m ± 0.0039 N·m |
 | **Base NEMA 17 Torque** | 0.13 N·m ± 0.0039 N·m |
