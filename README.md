@@ -49,7 +49,7 @@ Reduction ratio: **$1 : (N - 1)$** (rotor rotates opposite to input shaft).
 | **Tolerance Offset Applied** | +0.15 mm (+0.015 cm) profile clearance |
 | **Gearbox Torque** | 0.81 N·m ± 0.0039 N·m |
 | **Base NEMA 17 Torque** | 0.13 N·m ± 0.0039 N·m |
-| **Efficiency** | 66% |
+| **Efficiency** | 66% ± 0.034% |
 
 ### Design Breakdown & Features
 
