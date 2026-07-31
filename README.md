@@ -31,8 +31,7 @@ Reduction ratio: **$1 : (N - 1)$** (rotor rotates opposite to input shaft).
 ## 🚀 Version 3 — Detailed Overview & Stats
 
 > [!NOTE]  
-> This section is dedicated to **Version 3**, a fully functional 3D-printed cycloidal gearbox powered by a standard NEMA 17 stepper motor.
-
+> This section is dedicated to **Version 3**, whos CAD files can be found under cad_models in version_3
 ### Key Specifications & Performance Stats
 
 | Metric / Parameter | Value / Detail |
