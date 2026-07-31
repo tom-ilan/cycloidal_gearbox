@@ -1,86 +1,68 @@
 # Cycloidal Gearbox ⚙️
 
-This project currently has two parts completed parts:
-
-1) A Python-based script for **Autodesk Fusion 360** that automatically generates the sketch profiles required to model a complete cycloidal gearbox. It calculates and draws the cycloidal disk, the outer housing pins, and the concentric output disk pins, and the input pins.
-
-2) An example of what a 3d printed cycloidal gearbox that was designed using the python script and 3d printed, can be found under version_3.
----
-
-## File Structure
-
-- **[cycloidal_generator]** The parametric equation generator
-- **[cad_models]** The models used in each version of the cycloidal gearbox examples
+Parametric cycloidal gearbox generator script for Autodesk Fusion 360 along with functional 3D printable designs.
 
 ---
 
-## How to Install and Run
+## 🛠️ Fusion 360 Generator (Quick Guide)
 
-1. Open **Autodesk Fusion 360**.
-2. Press `Shift + S` on your keyboard (or navigate to **Utilities** > **Add-Ins** > **Scripts and Add-Ins**).
-3. Select the **Scripts** tab.
-4. Click the green **`+` (Plus)** button next to "My Scripts" to add a new script.
-5. Select the folder `cycloidal_generator` from this directory.
-6. The script `cycloidal_generator` will appear under **My Scripts**. Select it and click **Run**.
+The **`cycloidal_generator`** script automatically calculates and draws 2D sketch profiles in Fusion 360 for the cycloidal rotor disk, outer housing pins, and output drive pins.
 
----
+### Installation & Execution
+1. Open Fusion 360 and open **Scripts and Add-Ins** (`Shift + S`).
+2. Under the **Scripts** tab, click **`+` (Plus)** to add a script.
+3. Select the `cycloidal_generator` folder and click **Run**.
 
-## Input Parameters
+### Key Parameters
+- **Pins ($N$) & Pitch Radius ($R$):** Sets outer stationary housing geometry (Rotor has $N-1$ lobes).
+- **Eccentricity ($E$):** Input shaft offset distance. *(Constraint: $R > E \cdot N$)*.
+- **Outer Pin Radius ($r$):** Roller pin radius. *(Constraint: validated against undercut limit $r_{\text{max}}$)*.
+- **Precision / Profile Offset:** Angular step size and tolerance offset ($+$ for 3D print clearance).
+- **Output Pins & Bolt Radius:** Defines concentric output pins and rotor clearance holes ($r_{\text{pin}} + E$).
 
-When running the script, you will be prompted for the following parameters (all dimensions are in **centimeters**):
-
-| Parameter | Description |
-|---|
-| **Number of pins (N)** | Total number of outer stationary housing pins. The cycloidal disk will have $N - 1$ lobes. |
-| **Pitch radius (R)**  | Radius of the circle on which the outer housing pins are distributed. |
-| **Eccentricity (E)** | The input shaft offset/eccentricity. |
-| **Outer pin radius (r)**  | Radius of the stationary outer housing pins/rollers. |
-| **Step size / Precision** | Angular precision in degrees. A smaller step size generates a smoother spline profile. |
-| **Input shaft/bearing radius**  | Radius of the central input bearing. |
-| **Output pin radius** | Radius of the pins attached to the output disk/shaft. |
-| **Number of output holes**  | The quantity of output pin-and-hole arrangements. |
-| **Output bolt circle radius** | The radial distance from the center to the output pins/holes. |
-| **Tollerence** | An offest applied to the disk for manifacturing |
+### Profile Math
+The cycloidal rotor profile is generated using:
+$$x = R \cos(t) - E \cos(N t) - r \cos(t + \psi), \quad y = R \sin(t) - E \sin(N t) - r \sin(t + \psi)$$
+$$\psi = \text{atan2}\left(\sin((1 - N) t), \frac{R}{E \cdot N} - \cos((1 - N) t)\right)$$
+Reduction ratio: **$1 : (N - 1)$** (rotor rotates opposite to input shaft).
 
 ---
 
-## Mathematical Foundations
+## 🚀 Version 3 — Detailed Overview & Stats
 
-### 1. Cycloidal Disk Profile
-The profile of the cycloidal disk is generated parametrically with parameter $t$ (from $0$ to $2\pi$):
+> [!NOTE]  
+> This section is dedicated to **Version 3**, a fully functional 3D-printed cycloidal gearbox powered by a standard NEMA 17 stepper motor.
 
-$$x = R \cos(t) - r \cos(t + \psi) - E \cos(N \cdot t)$$
-$$y = -R \sin(t) + r \sin(t + \psi) + E \sin(N \cdot t)$$
+### Key Specifications & Performance Stats
 
-Where $\psi$ is the offset angle calculation:
+| Metric / Parameter | Value / Detail |
+|---|---|
+| **Gear Ratio** | 1:9 ($N=10$ outer pins, 9 rotor lobes) |
+| **Outer Diameter** | 9.0 cm (90 mm) |
+| **Drive Motor** | NEMA 17 Stepper Motor |
+| **3D Printing Material** | PLA |
+| **Primary Fasteners / Hardware** | 4 **m3 x 8 screws**, 2 **6004 Bearings** |
+| **Tolerance Offset Applied** | +0.15 mm (+0.015 cm) profile clearance |
+| **Gearbox Torque** | 0.81  N/m ± 0.0039 N·m |
+| **Base Nema17 Torque** | 0.13 N/m ± 0.0039 N·m|
+| **Efficency** | 66% | 
 
-$$\psi = \text{atan2}\left(\sin((1 - N) \cdot t), \frac{R}{E \cdot N} - \cos((1 - N) \cdot t)\right)$$
 
-### 2. Output Disk Clearance & Reduction
-- **Output Holes (in Rotor):** Center of output holes are offset parametrically to track the rotor wobble:
-  - $X\text{-offset} = -E \cos(N \cdot t)$
-  - $Y\text{-offset} = E \sin(N \cdot t)$
-  - **Output Hole Radius:** To accommodate the eccentric wobble, the hole radius in the rotor is drawn as $r_{\text{pin}} + E$.
-- **Concentric Output Disk:** Sits concentric with the housing origin ($0$ offset).
-- **Speed Reduction:** For an $N$-pin stationary ring housing, the output disk rotates in the opposite direction of the input shaft with a speed reduction of:
+### Design Breakdown & Features
 
-$$\theta_{\text{out}} = -\frac{t}{N - 1}$$
+#### 1. Output mechanism
+This gearbox is an Inrunner meaning it has an output shaft/lobe, this repo contains both a flat output and a output stick.
 
---- 
+#### 2.Maximum Torque
+This gearbox when maxium torque is sustained has a chance of failing in the form of the output pins snapping, this only though tends to ocour during proplonged loading.
 
-## Cycloidal Gearbox Examples
-
-### Version 1
-A hand powered simple cycloidal gearbox
-
-### Version 2
-A non functional attempt at a micro cycloidal gearbox atached to a nema 17 stepper motor
-
-### Version 3
-A functional cycloidal gearbox that runs on a nema 17, with a 9 cm diameter and a 1:9 gear ratio
+#### 3.Backdrivability
+The gearbox is able to backdriven.
 
 ---
 
-## In Development
+## 📁 Other Versions & History
 
-- version 4 a micro gearbox similar to version 2 but actually working
+- **Version 1:** Initial hand-powered demonstration cycloidal gearbox model.
+- **Version 2:** Micro cycloidal gearbox prototype for NEMA 17 (experimental).
+

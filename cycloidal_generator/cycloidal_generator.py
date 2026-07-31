@@ -92,6 +92,7 @@ def create_geometry(N: int, R: float, E: float, r: float, step_angle: float,
 
     for i in range(num_output_holes):
         hx, hy = cycloidal_math.output_pin_position(i, num_output_holes, output_bolt_radius)
+        hx -= E  # Shift the output disk holes to be centered on the rotor center (E, 0)
         hole_center = adsk.core.Point3D.create(E + hx, hy, 0)
         disk_circles.addByCenterRadius(hole_center, output_hole_radius)
 
@@ -99,6 +100,7 @@ def create_geometry(N: int, R: float, E: float, r: float, step_angle: float,
     output_circles = sketch_output.sketchCurves.sketchCircles
     for i in range(num_output_holes):
         px, py = cycloidal_math.output_pin_position(i, num_output_holes, output_bolt_radius)
+        px += E  # Shift the output disk pins to be centered on the rotor center (E, 0)
         pin_center = adsk.core.Point3D.create(px, py, 0)
         output_circles.addByCenterRadius(pin_center, output_pin_radius)
 
