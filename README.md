@@ -43,7 +43,7 @@ Reduction ratio: **$1 : (N - 1)$** (rotor rotates opposite to input shaft).
 |---|---|
 | **Gear Ratio** | 1:9 ($N=10$ outer pins, 9 rotor lobes) |
 | **Outer Diameter** | 9.0 cm (90 mm) |
-| **Drive Motor** | NEMA 17 Stepper Motor |
+| **Drive Motor** | NEMA 17 Stepper Motor (42bygh40-A24dh)|
 | **3D Printing Material** | PLA |
 | **Primary Fasteners / Hardware** | 4× **M3 × 8 screws**, 2× **6704 Bearings** |
 | **Tolerance Offset Applied** | +0.15 mm (+0.015 cm) profile clearance |
@@ -59,8 +59,8 @@ This gearbox is an inrunner design, meaning it features an output shaft/lobe. Th
 #### 2. Maximum Torque & Structural Integrity
 When subjected to maximum sustained torque, the output pins have a risk of snapping. This failure mode typically occurs only during prolonged heavy loading.
 
-#### 3. Backdrivability
-The gearbox is fully backdrivable.
+#### 3. Backdrivability and Backlash
+The gearbox is fully backdrivable, also note the gearbox has high backlash due to the tollerences needed for 3d printing.
 
 ---
 
