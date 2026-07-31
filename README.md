@@ -9,7 +9,7 @@ Parametric cycloidal gearbox generator script for Autodesk Fusion 360 along with
 The **`cycloidal_generator`** script automatically calculates and draws 2D sketch profiles in Fusion 360 for the cycloidal rotor disk, outer housing pins, and output drive pins.
 
 ### Installation & Execution
-1. Open Fusion 360 and open **Scripts and Add-Ins** (`Shift + S`).
+1. Open Fusion 360 and launch **Scripts and Add-Ins** (`Shift + S`).
 2. Under the **Scripts** tab, click **`+` (Plus)** to add a script.
 3. Select the `cycloidal_generator` folder and click **Run**.
 
@@ -31,7 +31,10 @@ Reduction ratio: **$1 : (N - 1)$** (rotor rotates opposite to input shaft).
 ## 🚀 Version 3 — Detailed Overview & Stats
 
 > [!NOTE]  
-> This section is dedicated to **Version 3**, whos CAD files can be found under cad_models in version_3
+> This section is dedicated to **Version 3**, whose CAD files can be found under `cad_models/version_3`.
+
+![Full Assembly](media/full_assembly.png)
+
 ### Key Specifications & Performance Stats
 
 | Metric / Parameter | Value / Detail |
@@ -40,23 +43,22 @@ Reduction ratio: **$1 : (N - 1)$** (rotor rotates opposite to input shaft).
 | **Outer Diameter** | 9.0 cm (90 mm) |
 | **Drive Motor** | NEMA 17 Stepper Motor |
 | **3D Printing Material** | PLA |
-| **Primary Fasteners / Hardware** | 4 **m3 x 8 screws**, 2 **6004 Bearings** |
+| **Primary Fasteners / Hardware** | 4× **M3 × 8 screws**, 2× **6004 Bearings** |
 | **Tolerance Offset Applied** | +0.15 mm (+0.015 cm) profile clearance |
-| **Gearbox Torque** | 0.81  N/m ± 0.0039 N·m |
-| **Base Nema17 Torque** | 0.13 N/m ± 0.0039 N·m|
-| **Efficency** | 66% | 
-
+| **Gearbox Torque** | 0.81 N·m ± 0.0039 N·m |
+| **Base NEMA 17 Torque** | 0.13 N·m ± 0.0039 N·m |
+| **Efficiency** | 66% |
 
 ### Design Breakdown & Features
 
-#### 1. Output mechanism
-This gearbox is an Inrunner meaning it has an output shaft/lobe, this repo contains both a flat output and a output stick.
+#### 1. Output Mechanism
+This gearbox is an inrunner design, meaning it features an output shaft/lobe. The repository contains CAD files for both a flat output shaft and an output shaft with an integrated 10 cm lever arm for torque testing.
 
-#### 2.Maximum Torque
-This gearbox when maxium torque is sustained has a chance of failing in the form of the output pins snapping, this only though tends to ocour during proplonged loading.
+#### 2. Maximum Torque & Structural Integrity
+When subjected to maximum sustained torque, the output pins have a risk of snapping. This failure mode typically occurs only during prolonged heavy loading.
 
-#### 3.Backdrivability
-The gearbox is able to backdriven.
+#### 3. Backdrivability
+The gearbox is fully backdrivable.
 
 ---
 
