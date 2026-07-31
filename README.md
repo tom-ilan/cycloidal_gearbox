@@ -33,7 +33,9 @@ Reduction ratio: **$1 : (N - 1)$** (rotor rotates opposite to input shaft).
 > [!NOTE]  
 > This section is dedicated to **Version 3**, whose CAD files can be found under `cad_models/version_3`.
 
-<img src="media/full_assembly.png" width="400" alt="Logo">
+<p align="center">
+<img src="media/full_assembly.png" width="600" alt="Logo">
+</p>
 
 ### Key Specifications & Performance Stats
 
