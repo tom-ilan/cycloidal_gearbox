@@ -2,6 +2,8 @@
 
 Parametric cycloidal gearbox generator script for Autodesk Fusion 360 along with functional 3D printable designs.
 
+![Gearbox Demo](media/gearbox.gif/image.gif)
+
 ---
 
 ## 🛠️ Fusion 360 Generator (Quick Guide)
@@ -46,22 +48,26 @@ Reduction ratio: **$1 : (N - 1)$** (rotor rotates opposite to input shaft).
 | **Drive Motor** | NEMA 17 Stepper Motor (42bygh40-A24dh)|
 | **3D Printing Material** | PLA |
 | **Primary Fasteners / Hardware** | 4× **M3 × 8 screws**, 2× **6704 Bearings** |
-| **Tolerance Offset Applied** | +0.15 mm (+0.015 cm) profile clearance |
-| **Gearbox Torque** | 1.27 N·m ± 0.0061 N·m |
+| **Tolerance Offset Applied** | +0.15 mm (+0.015 cm) all around|
+| **Gearbox Torque** | 1.28 N·m ± 0.0061 N·m |
 | **Base NEMA 17 Torque** | 0.21 N·m ± 0.0061 N·m |
-| **Efficiency** | 66% ± 0.020% |
+| **Efficiency** | 66% ± 0.220% |
 
-### Design Breakdown & Features
+### Design Process
 
-#### 1. Output Mechanism
-This gearbox is an inrunner design, meaning it features an output shaft/lobe. The repository contains CAD files for both a flat output shaft and an output shaft with an integrated 10 cm lever arm for torque testing.
+#### Version 1
+This gearbox was a handcranked gearbox specifcally meant to test the validaty of the python cycloidal generator. It had a gear ratio of 1:9. 
 
-#### 2. Maximum Torque & Structural Integrity
-When subjected to maximum sustained torque, the output pins have a risk of snapping. This failure mode typically occurs only during prolonged heavy loading.
+#### Version 2
+This design was a micro cycloidal gearbox with a ratio of 1:9, meant to only take up the same footprint as a NEMA 17, due to the tight tollerences needed for a small cycloidal drive and the lack of percision offered by 3d printing this design did not work.
 
-#### 3. Backdrivability and Backlash
-The gearbox is fully backdrivable, also note the gearbox has high backlash due to the tollerences needed for 3d printing.
+#### Version 3
+This gearbox was the first working version to run on a NEMA 17. It has a larger footprint compared to Version 2 allowing greater tollerences and a fully functional design.
 
+#### Further room for growth
+1) The housing pins can be replaces with MR128 bearings allowing for less friction and higher efficency in the gearbox.
+
+2) The output pins can be replaced with M2 screws with metall coverings to increase rgidity ,maximum torque output, and the efficency of the gearbox.
 ---
 
 ## 📁 Other Versions & History
