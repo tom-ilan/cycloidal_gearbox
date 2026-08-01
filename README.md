@@ -2,7 +2,7 @@
 
 Parametric cycloidal gearbox generator script for Autodesk Fusion 360 along with functional 3D printable designs.
 
-![Gearbox Demo](media/gearbox.gif/image.gif)
+![Gearbox Demo](media/gearbox.gif)
 
 ---
 
