@@ -68,10 +68,4 @@ This gearbox was the first working version to run on a NEMA 17. It has a larger 
 1) The housing pins can be replaces with MR128 bearings allowing for less friction and higher efficency in the gearbox.
 
 2) The output pins can be replaced with M2 screws with metall coverings to increase rgidity ,maximum torque output, and the efficency of the gearbox.
----
-
-## 📁 Other Versions & History
-
-- **Version 1:** Initial hand-powered demonstration cycloidal gearbox model.
-- **Version 2:** Micro cycloidal gearbox prototype for NEMA 17 (experimental).
 
