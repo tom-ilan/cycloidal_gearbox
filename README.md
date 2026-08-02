@@ -62,9 +62,9 @@ Reduction ratio: **$1 : (N - 1)$** (rotor rotates opposite to input shaft).
 | **3D Printing Material** | PLA |
 | **Primary Fasteners / Hardware** | 4× **M3 × 8 screws**, 2× **6704 Bearings** |
 | **Tolerance Offset Applied** | +0.15 mm (+0.015 cm) all around|
-| **Gearbox Torque** | 1.28 N·m ± 0.0061 N·m |
-| **Base NEMA 17 Torque** | 0.21 N·m ± 0.0061 N·m |
-| **Efficiency** | 66% ± 0.220% |
+| **Gearbox Torque** | 1.3 N·m ± 0.007 N·m |
+| **Base NEMA 17 Torque** | 0.21 N·m ± 0.007 N·m |
+| **Efficiency** | 66% ± 0.22% |
 
 
 #### Further room for growth
