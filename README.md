@@ -1,18 +1,21 @@
 # Cycloidal Gearbox ⚙️
 
-I'm a 15-year-old engineer, this is my cycloidal gearbox I built, and the python script I created to generate it! This is my second project, and the first on my own 3D printer which I managed to purchase with my job over the winter.
+I'm a 15-year-old wannabe engineer, this is my cycloidal gearbox I built, and the python script I created to generate it! This is my second project, and the first on my own 3D printer. Which I managed to purchase with my job over the winter.
 
 ![Gearbox Demo](media/gearbox.gif)
 
 ## Design Process
 
 ### Version 1
+
 This gearbox was a handcranked gearbox specifically meant to test the validity of the python cycloidal generator. It had a gear ratio of 1:9. 
 
 ### Version 2
+
 This design was a micro cycloidal gearbox with a ratio of 1:9, meant to only take up the same footprint as a NEMA 17. Due to the tight tolerances needed for a small cycloidal drive and the lack of precision offered by 3D printing, this design did not work.
 
 ### Version 3
+
 This gearbox was the first working version to run on a NEMA 17. It has a larger footprint compared to Version 2 allowing greater tolerances and a fully functional design.
 ---
 
