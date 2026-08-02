@@ -1,6 +1,6 @@
 # Cycloidal Gearbox ⚙️
 
-This is my cycloidal gearbox I built, and the python script I created to generate it! 
+This is my cycloidal gearbox I built, and the python script I created to generate it! A cycloidal gearbox is a type of gearbox that allows you to turn rotational speed into torque. 
 
 ![Gearbox Demo](media/gearbox.gif)
 
