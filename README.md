@@ -1,6 +1,6 @@
 # Cycloidal Gearbox ⚙️
 
-I'm a 15-year-old wannabe engineer, this is my cycloidal gearbox I built, and the python script I created to generate it! This is my second project, and the first on my own 3D printer. Which I managed to purchase with my job over the winter.
+This is my cycloidal gearbox I built, and the python script I created to generate it! 
 
 ![Gearbox Demo](media/gearbox.gif)
 
