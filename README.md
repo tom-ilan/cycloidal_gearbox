@@ -1,19 +1,34 @@
 # Cycloidal Gearbox ⚙️
 
-Parametric cycloidal gearbox generator script for Autodesk Fusion 360 along with functional 3D printable designs.
+I'm a 15 yearold engineer, this is my cycloidal gearbox I built, and the python scrip I created to generate it! 
 
 ![Gearbox Demo](media/gearbox.gif)
 
+## Design Process
+
+### Version 1
+This gearbox was a handcranked gearbox specifcally meant to test the validaty of the python cycloidal generator. It had a gear ratio of 1:9. 
+
+### Version 2
+This design was a micro cycloidal gearbox with a ratio of 1:9, meant to only take up the same footprint as a NEMA 17, due to the tight tollerences needed for a small cycloidal drive and the lack of percision offered by 3d printing this design did not work.
+
+### Version 3
+This gearbox was the first working version to run on a NEMA 17. It has a larger footprint compared to Version 2 allowing greater tollerences and a fully functional design.
 ---
 
-## 🛠️ Fusion 360 Generator (Quick Guide)
+## 🛠️ The Python Script
 
-The **`cycloidal_generator`** script automatically calculates and draws 2D sketch profiles in Fusion 360 for the cycloidal rotor disk, outer housing pins, and output drive pins.
+This python script was based of the Solidworks Article Building a Cycloidal Drive with SOLIDWORKS. The two main parametric equations I used were: 
+
+$$x = R \cos(t) - E \cos(N t) - r \cos(t + \psi), \quad y = R \sin(t) - E \sin(N t) - r \sin(t + \psi)$$
+$$\psi = \text{atan2}\left(\sin((1 - N) t), \frac{R}{E \cdot N} - \cos((1 - N) t)\right)$$
+Reduction ratio: **$1 : (N - 1)$** (rotor rotates opposite to input shaft).
 
 ### Installation & Execution
-1. Open Fusion 360 and launch **Scripts and Add-Ins** (`Shift + S`).
-2. Under the **Scripts** tab, click **`+` (Plus)** to add a script.
-3. Select the `cycloidal_generator` folder and click **Run**.
+1. Clone the the repo
+2. Open Fusion 360 and launch **Scripts and Add-Ins** (`Shift + S`).
+3. Under the **Scripts** tab, click **`+` (Plus)** to add a script.
+4. Select the `cycloidal_generator` folder and click **Run**.
 
 ### Key Parameters
 - **Pins ($N$) & Pitch Radius ($R$):** Sets outer stationary housing geometry (Rotor has $N-1$ lobes).
@@ -21,12 +36,6 @@ The **`cycloidal_generator`** script automatically calculates and draws 2D sketc
 - **Outer Pin Radius ($r$):** Roller pin radius. *(Constraint: validated against undercut limit $r_{\text{max}}$)*.
 - **Precision / Profile Offset:** Angular step size and tolerance offset ($+$ for 3D print clearance).
 - **Output Pins & Bolt Radius:** Defines concentric output pins and rotor clearance holes ($r_{\text{pin}} + E$).
-
-### Profile Math
-The cycloidal rotor profile is generated using:
-$$x = R \cos(t) - E \cos(N t) - r \cos(t + \psi), \quad y = R \sin(t) - E \sin(N t) - r \sin(t + \psi)$$
-$$\psi = \text{atan2}\left(\sin((1 - N) t), \frac{R}{E \cdot N} - \cos((1 - N) t)\right)$$
-Reduction ratio: **$1 : (N - 1)$** (rotor rotates opposite to input shaft).
 
 ---
 
@@ -53,16 +62,6 @@ Reduction ratio: **$1 : (N - 1)$** (rotor rotates opposite to input shaft).
 | **Base NEMA 17 Torque** | 0.21 N·m ± 0.0061 N·m |
 | **Efficiency** | 66% ± 0.220% |
 
-### Design Process
-
-#### Version 1
-This gearbox was a handcranked gearbox specifcally meant to test the validaty of the python cycloidal generator. It had a gear ratio of 1:9. 
-
-#### Version 2
-This design was a micro cycloidal gearbox with a ratio of 1:9, meant to only take up the same footprint as a NEMA 17, due to the tight tollerences needed for a small cycloidal drive and the lack of percision offered by 3d printing this design did not work.
-
-#### Version 3
-This gearbox was the first working version to run on a NEMA 17. It has a larger footprint compared to Version 2 allowing greater tollerences and a fully functional design.
 
 #### Further room for growth
 1) The housing pins can be replaces with MR128 bearings allowing for less friction and higher efficency in the gearbox.
