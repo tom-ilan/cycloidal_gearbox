@@ -17,6 +17,7 @@ This design was a micro cycloidal gearbox with a ratio of 1:9, meant to only tak
 ### Version 3
 
 This gearbox was the first working version to run on a NEMA 17. It has a larger footprint compared to Version 2 allowing greater tolerances and a fully functional design.
+
 ---
 
 ## 🛠️ The Python Script
