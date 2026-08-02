@@ -1,31 +1,31 @@
 # Cycloidal Gearbox ⚙️
 
-I'm a 15 yearold engineer, this is my cycloidal gearbox I built, and the python scrip I created to generate it! 
+I'm a 15-year-old engineer, this is my cycloidal gearbox I built, and the python script I created to generate it! This is my second project, and the first on my own 3D printer which I managed to purchase with my job over the winter.
 
 ![Gearbox Demo](media/gearbox.gif)
 
 ## Design Process
 
 ### Version 1
-This gearbox was a handcranked gearbox specifcally meant to test the validaty of the python cycloidal generator. It had a gear ratio of 1:9. 
+This gearbox was a handcranked gearbox specifically meant to test the validity of the python cycloidal generator. It had a gear ratio of 1:9. 
 
 ### Version 2
-This design was a micro cycloidal gearbox with a ratio of 1:9, meant to only take up the same footprint as a NEMA 17, due to the tight tollerences needed for a small cycloidal drive and the lack of percision offered by 3d printing this design did not work.
+This design was a micro cycloidal gearbox with a ratio of 1:9, meant to only take up the same footprint as a NEMA 17. Due to the tight tolerances needed for a small cycloidal drive and the lack of precision offered by 3D printing, this design did not work.
 
 ### Version 3
-This gearbox was the first working version to run on a NEMA 17. It has a larger footprint compared to Version 2 allowing greater tollerences and a fully functional design.
+This gearbox was the first working version to run on a NEMA 17. It has a larger footprint compared to Version 2 allowing greater tolerances and a fully functional design.
 ---
 
 ## 🛠️ The Python Script
 
-This python script was based of the Solidworks Article Building a Cycloidal Drive with SOLIDWORKS. The two main parametric equations I used were: 
+This python script was based on the SolidWorks article *Building a Cycloidal Drive with SOLIDWORKS*. The two main parametric equations I used were: 
 
 $$x = R \cos(t) - E \cos(N t) - r \cos(t + \psi), \quad y = R \sin(t) - E \sin(N t) - r \sin(t + \psi)$$
 $$\psi = \text{atan2}\left(\sin((1 - N) t), \frac{R}{E \cdot N} - \cos((1 - N) t)\right)$$
 Reduction ratio: **$1 : (N - 1)$** (rotor rotates opposite to input shaft).
 
 ### Installation & Execution
-1. Clone the the repo
+1. Clone the repo
 2. Open Fusion 360 and launch **Scripts and Add-Ins** (`Shift + S`).
 3. Under the **Scripts** tab, click **`+` (Plus)** to add a script.
 4. Select the `cycloidal_generator` folder and click **Run**.
@@ -64,7 +64,8 @@ Reduction ratio: **$1 : (N - 1)$** (rotor rotates opposite to input shaft).
 
 
 #### Further room for growth
-1) The housing pins can be replaces with MR128 bearings allowing for less friction and higher efficency in the gearbox.
+1) The housing pins can be replaced with MR128 bearings allowing for less friction and higher efficiency in the gearbox.
 
-2) The output pins can be replaced with M2 screws with metall coverings to increase rgidity ,maximum torque output, and the efficency of the gearbox.
+2) The output pins can be replaced with M2 screws with metal coverings to increase rigidity, maximum torque output, and the efficiency of the gearbox.
+
 
