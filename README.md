@@ -75,7 +75,8 @@ Reduction ratio: **$1 : (N - 1)$** (rotor rotates opposite to input shaft).
 #### Print Settings
 
 The standard bambu labs settings with PLA for a P1S other than:
- 
+
 minimum support x y: 1mm
+
 support interference material: Bambu labs support PLA
 
